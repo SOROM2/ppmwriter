@@ -19,15 +19,13 @@ use std::fs::File;
 use std::io::Write;
 use std::path::Path;
 
-use ppmwriter;
-
 fn main() {
     let name = "image.ppm";
-    let mut ppm = ppmwriter::Writer::new(69, 35, 1).unwrap();
-    
+    let mut ppm = ppmwriter::Writer::new(69, 35, 2301).unwrap();
+
     for n in 0..ppm.size {
         if n % 2 == 0 {
-            ppm.write_pixel(ppm.maxval, ppm.maxval, ppm.maxval);
+            ppm.write_pixel(ppm.maxval, 0, ppm.maxval);
         } else {
             ppm.write_pixel(0, 0, 0);
         }

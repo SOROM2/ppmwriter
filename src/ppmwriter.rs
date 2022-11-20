@@ -75,16 +75,15 @@ impl Writer {
     #[allow(dead_code)]
     pub fn write_pixel(&mut self, r: u16, g: u16, b: u16) {
         if self.mode == Mode::Wide {
-            // upper-byte strategy:
-            //     mask only the upper 4 bits
-            //         0bXXXXxxxx & 0b11110000 = 0bXXXX0000
-            //     shift the upper 4 bits into the lower position
-            //         0bXXXX0000 >> 4 = 0bzzzzXXXX
-            let upper = |x: u16| -> u8 { ((x & 0b11110000) >> 4) as u8 };
+            //     mask only the upper 8 bits
+            //         0x???? & 0xFF00 = 0x??00
+            //     shift the upper 8 bits into the lower position
+            //         0x??00 >> 8 = 0xzz 0x??
+            let upper = |x: u16| -> u8 { ((x & 0xff00) >> 8) as u8 };
             // lower-byte strategy:
-            //     mask only the lower 4 bits
-            //         0bxxxxXXXX & 0b00001111 = 0bzzzzXXXX
-            let lower = |x: u16| -> u8 { (x & 0b00001111) as u8 };
+            //     mask only the lower 8 bits
+            //         0x???? & 0x00FF = 0x00 0x??
+            let lower = |x: u16| -> u8 { (x & 0x00ff) as u8 };
 
             self.buffer.push(upper(r));
             self.buffer.push(lower(r));
