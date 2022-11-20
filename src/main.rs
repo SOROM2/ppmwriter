@@ -19,7 +19,7 @@ use std::fs::File;
 use std::io::Write;
 use std::path::Path;
 
-mod ppmwriter;
+use ppmwriter;
 
 fn main() {
     let name = "image.ppm";
