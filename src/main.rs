@@ -18,7 +18,6 @@
 use std::fs::File;
 use std::io::Write;
 use std::path::Path;
-use std::process::Command;
 
 mod ppmwriter;
 
@@ -35,15 +34,12 @@ fn main() {
     }
 
     let path = Path::new(name);
-    let mut file = match File::create(&path) {
+    let mut file = match File::create(path) {
         Err(why) => panic!("Couldn't create {}: {}", path.display(), why),
         Ok(file) => file,
     };
 
-    match file.write_all(ppm.borrow_buffer()) {
-        Err(why) => panic!("Couldn't write to {}: {}", path.display(), why),
-        Ok(_) => {},
-    };
-
-    //Command::new("xdg-open").arg(name).spawn().unwrap();
+    if let Err(why) = file.write_all(ppm.borrow_buffer()) {
+        panic!("Couldn't write to {}: {}", path.display(), why)
+    }
 }

@@ -15,17 +15,20 @@
 *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+#[allow(dead_code)]
 #[derive(Debug)]
 pub enum Error {
     InvalidSize,
 }
 
+#[allow(dead_code)]
 #[derive(Debug, PartialEq)]
 enum Mode {
     Normal,
     Wide,
 }
 
+#[allow(dead_code)]
 #[derive(Debug)]
 pub struct Writer {
     pub width: usize,
@@ -37,7 +40,7 @@ pub struct Writer {
 }
 
 impl Writer {
-
+    #[allow(dead_code)]
     pub fn new(width: usize, height: usize, maxval: u16) -> Result<Self, Error> {
         if height == 0 || width == 0 || maxval == 0 {
             return Err(Error::InvalidSize);
@@ -69,6 +72,7 @@ impl Writer {
         })
     }
 
+    #[allow(dead_code)]
     pub fn write_pixel(&mut self, r: u16, g: u16, b: u16) {
         if self.mode == Mode::Wide {
             // upper-byte strategy:
@@ -98,6 +102,7 @@ impl Writer {
         }
     }
 
+    #[allow(dead_code)]
     pub fn borrow_buffer(&self) -> &Vec<u8> {
         &self.buffer
     }

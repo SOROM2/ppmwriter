@@ -16,5 +16,4 @@
 */
 
 mod ppmwriter;
-use ppmwriter::Writer;
 
